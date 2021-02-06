@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose');
 
 const DB_URL = `mongodb+srv://${process.env.CLUSTER_NAME}:${process.env.CLUSTER_PASSWORD}@${process.env.DB_HOSTNAME}/${process.env.DB_NAME}?retryWrites=true&w=majority`;
@@ -27,4 +28,4 @@ mongoDB.on('disconnected', () => {
     console.log('disconnected');
 });
 
-connectDB();
+module.exports = connectDB;
