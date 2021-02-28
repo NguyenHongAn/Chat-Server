@@ -3,9 +3,9 @@
 /**
  * Module dependencies.
  */
-var app = require('../app');
-var debug = require('debug')('chat-server:server');
-var http = require('http');
+const app = require('../app');
+const debug = require('debug')('chat-server:server');
+const http = require('http');
 const Constants = require("../config");
 const { configWebSocket } = require('../WebSocket');
 /**

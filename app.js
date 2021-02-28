@@ -4,15 +4,23 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require("cors");
-//require route 
-const indexRouter = require('./routes/index.R');
-const usersRouter = require('./routes/users.R');
-
-const app = express();
+const passport = require("passport");
 
 //connect Mongoo DB
 require('dotenv').config();
 require('./db/mongodb')();
+
+//passport stratergy required
+require('./mildwares');
+
+//require route 
+const indexRoute = require('./routes/index.R');
+const usersRoute = require('./routes/users.R');
+const authRoute = require("./routes/auth.R");
+
+
+const app = express();
+
 
 app.use(logger('dev'));
 app.use(cors());
@@ -20,9 +28,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//passport init
+app.use(passport.initialize());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', indexRoute);
+app.use('/users', usersRoute);
+app.use('/auth', authRoute);
 
 app.use(function(req, res, next) {
   if (req.headers['content-type'] === 'application/json;') {

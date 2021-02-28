@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const AutoIncrement = require("mongoose-sequence")(mongoose);
 // isActive: 0: not Active, 1 : active, -1: block
+mongoose.set('useCreateIndex', true);
 
 const userSchema = mongoose.Schema({
     username: {
@@ -69,14 +70,14 @@ const userInThreadDetailSchema = mongoose.Schema({
     }
 }, {collection: "UserInThreadDetails"},{ toJSON: { virtuals: true }, toObject: { virtuals: true } });
 
-userInThreadDetail.virtual("user", {
+userInThreadDetailSchema.virtual("user", {
     ref: "User",
     localField: "userID",
     foreignField: "userID",
     justOne: false
 });
 
-userInThreadDetail.virtual("thread", {
+userInThreadDetailSchema.virtual("thread", {
     ref: "Thread",
     localField: "threadID",
     foreignField: "threadID",
